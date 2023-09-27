@@ -9,4 +9,4 @@ The following links provide a step-by-step description regarding each exercise:
 - [Setup Linter](./exercises/Linter.md) - TBD
 - [Setup Prettier](./exercises/Prettier.md) - TBD
 - [Radix Icons](./exercises/RadixIcons.md) - use Radix icons components.
-- [Vercel Deployment](./exercises/Vercel.md) - TBD
+- [Vercel Deployment](./exercises/Vercel.md) - steps to deploy your application on Vercel.

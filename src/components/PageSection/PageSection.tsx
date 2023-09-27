@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 import { PageSectionProps } from './types';
-import { css } from '../../../styled-system/css';
-import { PandaCSS } from '../PandaCSS';
 
 /**
  * A component to render a page section with optional full width and full spacing.
