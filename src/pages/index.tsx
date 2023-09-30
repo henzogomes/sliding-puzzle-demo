@@ -1,40 +1,40 @@
-import fs from 'fs';
-import path from 'path';
-import Head from 'next/head';
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { Avatar } from '@/components/Avatar';
-import { Infobar } from '@/components/Infobar';
-import { PageSection } from '@/components/PageSection';
+import fs from 'fs'
+import path from 'path'
+import Head from 'next/head'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
+import { Avatar } from '@/components/Avatar'
+import { Infobar } from '@/components/Infobar'
+import { PageSection } from '@/components/PageSection'
 import {
   GameState,
   PuzzleConfigs,
   PuzzleGame,
   PuzzleTileBaseProps,
-  PuzzleTileProps,
-} from '@/components/Puzzle';
-import { initializePuzzleTiles } from '@/utils/puzzle';
+  PuzzleTileProps
+} from '@/components/Puzzle'
+import { initializePuzzleTiles } from '@/utils/puzzle'
 
 export async function getServerSideProps() {
-  const puzzleSize: number = 3;
-  const avatarImageDirectory: string = 'images/avatars';
-  const originalImageSrc: string = `${avatarImageDirectory}/panda.jpeg`;
-  let avatarImageFilenames: string[] = [];
-  let puzzleTiles: PuzzleTileBaseProps[] = [];
+  const puzzleSize: number = 3
+  const avatarImageDirectory: string = 'images/avatars'
+  const originalImageSrc: string = `${avatarImageDirectory}/dog1.jpeg`
+  let avatarImageFilenames: string[] = []
+  let puzzleTiles: PuzzleTileBaseProps[] = []
 
   try {
-    const imageDirectory = path.join(process.cwd(), `public/${avatarImageDirectory}`);
-    avatarImageFilenames = fs.readdirSync(imageDirectory);
+    const imageDirectory = path.join(process.cwd(), `public/${avatarImageDirectory}`)
+    avatarImageFilenames = fs.readdirSync(imageDirectory)
   } catch (error) {
-    console.error('Error loading avatars:', error);
+    console.error('Error loading avatars:', error)
   }
 
   try {
     // Import the server-side utility function for initializing puzzle tiles.
     // Initialize puzzle tiles on the server side.
-    puzzleTiles = await initializePuzzleTiles(originalImageSrc, puzzleSize);
+    puzzleTiles = await initializePuzzleTiles(originalImageSrc, puzzleSize)
   } catch (error) {
-    console.error('Error initializing puzzle pieces:', error);
+    console.error('Error initializing puzzle pieces:', error)
   }
 
   return {
@@ -43,17 +43,17 @@ export async function getServerSideProps() {
       avatarImageFilenames,
       originalImageSrc,
       puzzleSize,
-      puzzleTiles,
-    },
-  };
+      puzzleTiles
+    }
+  }
 }
 
 interface HomeProps {
-  avatarImageDirectory: string;
-  avatarImageFilenames: string[];
-  originalImageSrc: string;
-  puzzleSize: number;
-  puzzleTiles: PuzzleTileProps[];
+  avatarImageDirectory: string
+  avatarImageFilenames: string[]
+  originalImageSrc: string
+  puzzleSize: number
+  puzzleTiles: PuzzleTileProps[]
 }
 
 const Home: React.FC<HomeProps> = ({
@@ -61,29 +61,29 @@ const Home: React.FC<HomeProps> = ({
   avatarImageFilenames,
   originalImageSrc,
   puzzleSize,
-  puzzleTiles,
+  puzzleTiles
 }) => {
   const initialGameState = {
     moves: 0,
     new: true,
     ended: false,
-    puzzleSolved: false,
-  };
+    puzzleSolved: false
+  }
 
-  const [tiles, setTiles] = useState<PuzzleTileProps[]>(puzzleTiles);
-  const [originalSrc, setOriginalSrc] = useState<string>(originalImageSrc);
-  const [size, setSize] = useState<number>(puzzleSize);
-  const [path, setPath] = useState<string>(originalImageSrc);
-  const [showNumbers, setShowNumbers] = useState<boolean>(false);
-  const [displayMirror, setDisplayMirror] = useState<boolean>(true);
+  const [tiles, setTiles] = useState<PuzzleTileProps[]>(puzzleTiles)
+  const [originalSrc, setOriginalSrc] = useState<string>(originalImageSrc)
+  const [size, setSize] = useState<number>(puzzleSize)
+  const [path, setPath] = useState<string>(originalImageSrc)
+  const [showNumbers, setShowNumbers] = useState<boolean>(false)
+  const [displayMirror, setDisplayMirror] = useState<boolean>(true)
   const [gameState, setGameState] = useState<GameState>({
     ...initialGameState,
     timeRemaining: 0,
-    timer: 0,
-  });
+    timer: 0
+  })
 
   // Three means "Harry".
-  const [avatarActiveId, setAvatarActiveId] = useState<number>(3);
+  const [avatarActiveId, setAvatarActiveId] = useState<number>(0)
 
   const updatePuzzleGame = (puzzleSize: number, path: string) => {
     // Handle the click event here
@@ -91,82 +91,82 @@ const Home: React.FC<HomeProps> = ({
     fetch('/api/load-image', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       // You can send data in the request body if needed
-      body: JSON.stringify({ puzzleSize, path }),
+      body: JSON.stringify({ puzzleSize, path })
     })
       .then((response) => response.json())
       .then((data) => {
         // Handle the response from the server
-        setOriginalSrc(path);
-        setTiles(data);
+        setOriginalSrc(path)
+        setTiles(data)
       })
       .catch((error) => {
         // Handle any errors
-        console.error('Error:', error);
-      });
-  };
+        console.error('Error:', error)
+      })
+  }
 
   const handleClick = (path: string, idx: number) => {
-    setPath(path);
-    setAvatarActiveId(idx);
-  };
+    setPath(path)
+    setAvatarActiveId(idx)
+  }
 
   const setPuzzleSize = (value: number[]) => {
-    setSize(value[0]);
-  };
+    setSize(value[0])
+  }
 
   const setTimer = (value: string) => {
-    const newTimer = Number(value) * 60;
+    const newTimer = Number(value) * 60
 
     setGameState((prevState) => ({
       ...prevState,
       ...initialGameState,
       timeRemaining: newTimer,
-      timer: newTimer,
-    }));
-  };
+      timer: newTimer
+    }))
+  }
 
   const setTimeRemaining = (time: number) => {
     setGameState((prevState) => ({
       ...prevState,
-      timeRemaining: time,
-    }));
-  };
+      timeRemaining: time
+    }))
+  }
 
   const toggleMirror = (checked: boolean) => {
-    setDisplayMirror(checked);
-  };
+    setDisplayMirror(checked)
+  }
 
   const toggleTilesNumbers = (checked: boolean) => {
-    setShowNumbers(checked);
-  };
+    setShowNumbers(checked)
+  }
 
   const handleRestartClick = () => {
     setGameState((prevState) => ({
       ...prevState,
       ...initialGameState,
-      timeRemaining: gameState.timer,
-    }));
-  };
+      timeRemaining: gameState.timer
+    }))
+  }
 
   useEffect(() => {
-    updatePuzzleGame(size, path);
-  }, [size, path]);
+    updatePuzzleGame(size, path)
+  }, [size, path])
 
   useEffect(() => {
     if (gameState.timer > 0 && gameState.timeRemaining === 0) {
       setGameState((prevState) => ({
         ...prevState,
         ended: true,
-        puzzleSolved: false,
-      }));
+        puzzleSolved: false
+      }))
     }
-  }, [gameState.timer, gameState.timeRemaining]);
+  }, [gameState.timer, gameState.timeRemaining])
 
-  const title = 'Sliding Puzzle Demo';
-  const description = 'Description';
+  const title = 'Sliding Puzzle Demo'
+  const description = 'Description'
 
   const timerOptions = [
     { name: 'Unlimited', value: '0' },
@@ -174,8 +174,8 @@ const Home: React.FC<HomeProps> = ({
     { name: '30 minutes', value: '30' },
     { name: '10 minutes', value: '10' },
     { name: '5 minutes', value: '5' },
-    { name: '1 minute', value: '1' },
-  ];
+    { name: '1 minute', value: '1' }
+  ]
 
   return (
     <>
@@ -197,7 +197,7 @@ const Home: React.FC<HomeProps> = ({
                 id={idx}
                 image={{
                   src: `${avatarImageDirectory}/${avatar}`,
-                  alt: `${avatar.replace('.jpeg', '')}`,
+                  alt: `${avatar.replace('.jpeg', '')}`
                 }}
                 active={avatarActiveId === idx}
                 handleClick={handleClick}
@@ -224,12 +224,7 @@ const Home: React.FC<HomeProps> = ({
             setGameState={setGameState}
           />
           <div className="original-image-container">
-            <Image
-              src={`/${originalSrc}`}
-              alt="Original Image"
-              width="500"
-              height="500"
-            />
+            <Image src={`/${originalSrc}`} alt="Original Image" width="500" height="500" />
             {!displayMirror && (
               <div className="original-image-overlay">
                 {/* @TODO: Place overlay icon here if you want. */}
@@ -247,7 +242,7 @@ const Home: React.FC<HomeProps> = ({
         </div>
       </PageSection>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

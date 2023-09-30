@@ -1,22 +1,32 @@
-import classNames from 'classnames';
-import React from 'react';
-import { AvatarProps } from './types';
+import classNames from 'classnames'
+import React from 'react'
+import { AvatarProps } from './types'
+import { css } from '../../../styled-system/css'
+import * as RadixAvatar from '@radix-ui/react-avatar'
 
 const Avatar = (props: AvatarProps) => {
-  const { id, image, active = false, handleClick } = props;
-  const { src, alt } = image;
+  const { id, image, active = false, handleClick } = props
+  const { src, alt } = image
 
   const classNameAvatar = classNames(
     'avatar',
-    active ? 'active' : false,
-  );
+    css({ border: '4px solid green' }),
+    active ? 'active' : false
+  )
 
-  // @TODO: Implement Radix Avatar.
   return (
-    <div className={classNameAvatar} onClick={() => handleClick(src, id)}>
-      <img src={src} alt={alt} />
-    </div>
-  );
-};
+    <RadixAvatar.Root
+      className={classNameAvatar}
+      onClick={() => handleClick(src, id)}
+    >
+      <RadixAvatar.Image className="AvatarImage" src={src} alt={alt} />
+      <RadixAvatar.Fallback>{alt}</RadixAvatar.Fallback>
 
-export default Avatar;
+      <RadixAvatar.Fallback className="AvatarFallback" delayMs={600}>
+        CT
+      </RadixAvatar.Fallback>
+    </RadixAvatar.Root>
+  )
+}
+
+export default Avatar
