@@ -14,6 +14,7 @@ import {
   PuzzleTileProps
 } from '@/components/Puzzle'
 import { initializePuzzleTiles } from '@/utils/puzzle'
+import { Loading } from '@/components/Loading'
 
 export async function getServerSideProps() {
   const puzzleSize: number = 3
@@ -23,7 +24,10 @@ export async function getServerSideProps() {
   let puzzleTiles: PuzzleTileBaseProps[] = []
 
   try {
-    const imageDirectory = path.join(process.cwd(), `public/${avatarImageDirectory}`)
+    const imageDirectory = path.join(
+      process.cwd(),
+      `public/${avatarImageDirectory}`
+    )
     avatarImageFilenames = fs.readdirSync(imageDirectory)
   } catch (error) {
     console.error('Error loading avatars:', error)
@@ -82,10 +86,14 @@ const Home: React.FC<HomeProps> = ({
     timer: 0
   })
 
-  // Three means "Harry".
   const [avatarActiveId, setAvatarActiveId] = useState<number>(0)
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   const updatePuzzleGame = (puzzleSize: number, path: string) => {
+    setLoading(true)
+
+    console.log('loading')
     // Handle the click event here
     // Send an HTTP request to the server
     fetch('/api/load-image', {
@@ -105,6 +113,9 @@ const Home: React.FC<HomeProps> = ({
       .catch((error) => {
         // Handle any errors
         console.error('Error:', error)
+      })
+      .finally(() => {
+        setLoading(false)
       })
   }
 
@@ -183,6 +194,7 @@ const Home: React.FC<HomeProps> = ({
         <title>{title}</title>
         <meta name="description" content={description} />
       </Head>
+      <Loading isLoading={loading} />
       <PageSection>
         <h1 className="typography-h1">{title}</h1>
         <hr />
@@ -224,7 +236,12 @@ const Home: React.FC<HomeProps> = ({
             setGameState={setGameState}
           />
           <div className="original-image-container">
-            <Image src={`/${originalSrc}`} alt="Original Image" width="500" height="500" />
+            <Image
+              src={`/${originalSrc}`}
+              alt="Original Image"
+              width="500"
+              height="500"
+            />
             {!displayMirror && (
               <div className="original-image-overlay">
                 {/* @TODO: Place overlay icon here if you want. */}
