@@ -74,12 +74,29 @@ const Home: React.FC<HomeProps> = ({
     puzzleSolved: false
   }
 
+  const toggleMusic = (checked: boolean) => {
+    const audio = document.getElementById('omfgaudio') as HTMLAudioElement
+
+    if (checked) {
+      if (audio) {
+        audio.play()
+      }
+    } else {
+      if (audio) {
+        audio.pause()
+      }
+    }
+
+    setMusic(checked)
+  }
+
   const [tiles, setTiles] = useState<PuzzleTileProps[]>(puzzleTiles)
   const [originalSrc, setOriginalSrc] = useState<string>(originalImageSrc)
   const [size, setSize] = useState<number>(puzzleSize)
   const [path, setPath] = useState<string>(originalImageSrc)
   const [showNumbers, setShowNumbers] = useState<boolean>(false)
   const [displayMirror, setDisplayMirror] = useState<boolean>(true)
+  const [music, setMusic] = useState<boolean>(false)
   const [gameState, setGameState] = useState<GameState>({
     ...initialGameState,
     timeRemaining: 0,
@@ -176,8 +193,8 @@ const Home: React.FC<HomeProps> = ({
     }
   }, [gameState.timer, gameState.timeRemaining])
 
-  const title = 'Sliding Puzzle Demo'
-  const description = 'Description'
+  const title = 'The Sausage Dog Sliding Puzzle'
+  const description = 'Demo'
 
   const timerOptions = [
     { name: 'Unlimited', value: '0' },
@@ -197,8 +214,6 @@ const Home: React.FC<HomeProps> = ({
       <Loading isLoading={loading} />
       <PageSection>
         <h1 className="typography-h1">{title}</h1>
-        <hr />
-        <div className="typography-body">{description}</div>
       </PageSection>
       <div className="dark-background">
         <PageSection>
@@ -226,6 +241,7 @@ const Home: React.FC<HomeProps> = ({
             setTimer={setTimer}
             toggleMirror={toggleMirror}
             toggleTilesNumbers={toggleTilesNumbers}
+            toggleMusic={toggleMusic}
           />
         </div>
         <div className="puzzle-container">
@@ -258,6 +274,10 @@ const Home: React.FC<HomeProps> = ({
           />
         </div>
       </PageSection>
+
+      <audio id="omfgaudio" loop={true}>
+        <source src="/audio/omfgdogs.mp3" type="audio/mpeg" />
+      </audio>
     </>
   )
 }

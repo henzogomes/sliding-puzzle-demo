@@ -19,7 +19,7 @@ const Avatar = (props: AvatarProps) => {
       w: 'full',
       cursor: 'pointer',
       transition: 'transform .2s ease-in-out',
-      border: '4px dashed green',
+      border: '4px dashed #b59070',
       lg: {
         w: '150px',
         h: '150px',
@@ -29,7 +29,7 @@ const Avatar = (props: AvatarProps) => {
   )
 
   const RootActive = css({
-    border: '4px solid #fff'
+    border: '4px solid #d6c894'
   })
 
   const Image = css({

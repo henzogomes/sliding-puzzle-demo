@@ -4,12 +4,14 @@ import Document, {
   Main,
   NextScript,
   DocumentContext,
-  DocumentInitialProps,
-} from 'next/document';
+  DocumentInitialProps
+} from 'next/document'
 
 class CustomDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-    const originalRenderPage = ctx.renderPage;
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
+    const originalRenderPage = ctx.renderPage
 
     // Run the React rendering logic synchronously.
     ctx.renderPage = () =>
@@ -17,13 +19,13 @@ class CustomDocument extends Document {
         // Useful for wrapping the whole react tree.
         enhanceApp: (App) => App,
         // Useful for wrapping in a per-page basis.
-        enhanceComponent: (Component) => Component,
-      });
+        enhanceComponent: (Component) => Component
+      })
 
     // Run the parent `getInitialProps`, it now includes the custom `renderPage`.
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(ctx)
 
-    return initialProps;
+    return initialProps
   }
 
   render() {
@@ -38,22 +40,17 @@ class CustomDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
             rel="stylesheet"
           />
         </Head>
-        {
-          /*
-            @TODO: Body styles go here.
-          */
-        }
         <body>
           <Main />
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default CustomDocument;
+export default CustomDocument

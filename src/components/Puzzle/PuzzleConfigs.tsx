@@ -1,14 +1,12 @@
-import { PuzzleConfigsProps } from './types';
-import { HoverCard } from '../HoverCard';
-import { Switch } from '../Switch';
+import { PuzzleConfigsProps } from './types'
+import { HoverCard } from '../HoverCard'
+import { Switch } from '../Switch'
 
 const PuzzleConfigs = (props: PuzzleConfigsProps) => {
-  const { toggleMirror, toggleTilesNumbers } = props;
+  const { toggleMirror, toggleTilesNumbers, toggleMusic } = props
 
   return (
     <>
-      {/* @TODO: Add a Radix slider to control number of tiles, if you wish. */}
-
       <div className="puzzle-configs-item">
         <Switch
           id="switch-tile-number-display"
@@ -34,9 +32,19 @@ const PuzzleConfigs = (props: PuzzleConfigsProps) => {
           />
         </div>
       </div>
-      {/* @TODO: Add a Radix select for the timer, if you wish. */}
-    </>
-  );
-};
 
-export default PuzzleConfigs;
+      <div className="device-desktop-only">
+        <div className="puzzle-configs-item">
+          <Switch
+            id="switch-music"
+            label="Play music"
+            handleChange={toggleMusic}
+            defaultChecked={false}
+          />
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default PuzzleConfigs

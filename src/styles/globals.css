@@ -12,8 +12,10 @@ li {
 
 /* @TODO: Remove this styles after setting up Panda */
 body {
-  background-color: #fff;
-  font-family: 'Poppins, sans-serif';
+  background-color: #422e31;
+  color: #d6c894;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 1px 1px 1px #000;
 }
 
 .avatar-container {
@@ -42,7 +44,7 @@ body {
 }
 
 .dark-background {
-  background-color: #000;
+  background-color: rgb(135 93 81 / 50%);
 }
 
 .device-desktop-only {
@@ -71,10 +73,10 @@ body {
 }
 
 .original-image-overlay {
-  background-color: #ccc;
+  background-color: #422e31;
   height: 100%;
   left: 0;
-  opacity: .8;
+  opacity: .985;
   position: absolute;
   top: 0;
   width: 100%;
@@ -195,7 +197,8 @@ body {
 }
 
 .switch-label {
-  color: #000;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
   font-size: 16px;
   line-height: 1;
   padding-right: 16px;
@@ -203,11 +206,13 @@ body {
 
 .typography-h1 {
   font-size: 36px;
-  font-weight: 700
+  font-weight: 700;
+  padding: 40px;
 }
 
 .typography-body {
   font-size: 24px;
+  padding: 0px 40px 20px 40px;
 }
 
 @media (min-width: 768px) {
@@ -245,9 +250,10 @@ body {
 
 .puzzle-tile-container span {
   color: white;
-  background-color: black;
   font-size: 22px;
-  position: relative;
+  position: absolute;
+  padding: 5px;
+  text-shadow: 1px 1px 1px #000;
 }
 
 /* LoadingSpinner */
