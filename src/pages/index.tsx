@@ -15,6 +15,10 @@ import {
 } from '@/components/Puzzle'
 import { initializePuzzleTiles } from '@/utils/puzzle'
 import { Loading } from '@/components/Loading'
+import classNames from 'classnames'
+import { flex } from '../../styled-system/patterns/flex'
+import { grid } from '../../styled-system/patterns'
+import { css } from '../../styled-system/css'
 
 export async function getServerSideProps() {
   const puzzleSize: number = 3
@@ -205,6 +209,30 @@ const Home: React.FC<HomeProps> = ({
     { name: '1 minute', value: '1' }
   ]
 
+  const avatarContainer = classNames(
+    grid({ columns: 5, gap: 10 }),
+    css({ py: 25 })
+  )
+
+  const puzzleConfigs = classNames(
+    flex({ align: 'center', justify: 'center', gap: 24 }),
+    css({ margin: '24px 0 ' })
+  )
+
+  const puzzleContainer = classNames(grid({ columns: 2, gap: 16 }))
+
+  const originalImageOverlay = classNames(
+    css({
+      bg: 'secondary',
+      height: '100%',
+      left: 0,
+      opacity: 0.985,
+      position: 'absolute',
+      top: 0,
+      width: '100%'
+    })
+  )
+
   return (
     <>
       <Head>
@@ -213,11 +241,11 @@ const Home: React.FC<HomeProps> = ({
       </Head>
       <Loading isLoading={loading} />
       <PageSection>
-        <h1 className="typography-h1">{title}</h1>
+        <h1 className={css({ textStyle: 'typographyH1', py: 35 })}>{title}</h1>
       </PageSection>
-      <div className="dark-background">
+      <div className={css({ bg: 'primary' })}>
         <PageSection>
-          <div className="avatar-container">
+          <div className={avatarContainer}>
             {avatarImageFilenames.map((avatar, idx) => (
               <Avatar
                 key={idx}
@@ -234,7 +262,7 @@ const Home: React.FC<HomeProps> = ({
         </PageSection>
       </div>
       <PageSection>
-        <div className="puzzle-configs">
+        <div className={puzzleConfigs}>
           <PuzzleConfigs
             timerOptions={timerOptions}
             setPuzzleSize={setPuzzleSize}
@@ -244,28 +272,24 @@ const Home: React.FC<HomeProps> = ({
             toggleMusic={toggleMusic}
           />
         </div>
-        <div className="puzzle-container">
+        <div className={puzzleContainer}>
           <PuzzleGame
             puzzleTiles={tiles}
             showTilesNumbers={showNumbers}
             gameState={gameState}
             setGameState={setGameState}
           />
-          <div className="original-image-container">
+          <div className={css({ position: 'relative' })}>
             <Image
               src={`/${originalSrc}`}
               alt="Original Image"
               width="500"
               height="500"
             />
-            {!displayMirror && (
-              <div className="original-image-overlay">
-                {/* @TODO: Place overlay icon here if you want. */}
-              </div>
-            )}
+            {!displayMirror && <div className={originalImageOverlay}></div>}
           </div>
         </div>
-        <div className="puzzle-info-container">
+        <div className={css({ margin: '24px 0 ' })}>
           <Infobar
             moves={gameState.moves}
             timer={gameState.timer}

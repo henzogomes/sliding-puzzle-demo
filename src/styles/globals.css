@@ -10,41 +10,8 @@ li {
   padding: 0;
 }
 
-/* @TODO: Remove this styles after setting up Panda */
 body {
-  background-color: #422e31;
-  color: #d6c894;
   font-family: 'Press Start 2P', monospace;
-  text-shadow: 1px 1px 1px #000;
-}
-
-.avatar-container {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  padding: 24px 0;
-}
-
-.avatar {
-  border-radius: 50%;
-  display: flex;
-  height: 150px;
-  width: 150px;
-}
-
-.avatar.active {
-  border: 4px solid #fff;
-}
-
-.avatar img {
-  border-radius: inherit;
-  object-fit: cover;
-  height: 100%;
-  width: 100%;
-}
-
-.dark-background {
-  background-color: rgb(135 93 81 / 50%);
 }
 
 .device-desktop-only {
@@ -61,25 +28,6 @@ body {
 
 .footer-social-medias-links {
   color: #fff;
-}
-
-.original-image-container {
-  display: none;
-  position: relative;
-}
-
-.original-image-container img {
-  border-radius: 4px;
-}
-
-.original-image-overlay {
-  background-color: #422e31;
-  height: 100%;
-  left: 0;
-  opacity: .985;
-  position: absolute;
-  top: 0;
-  width: 100%;
 }
 
 .page-section {
@@ -102,26 +50,6 @@ body {
 
 .page-section-mobile-padding {
   padding: 0 16px;
-}
-
-.puzzle-configs {
-  margin: 24px 0;
-}
-
-.puzzle-configs-item {
-  align-items: center;
-  display: flex;
-  gap: 16px;
-}
-
-.puzzle-container {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.puzzle-info-container {
-  margin: 24px 0;
 }
 
 .puzzle-inner-wrapper {
@@ -225,20 +153,10 @@ body {
     display: flex;
     justify-content: space-between;
   }
-
-  .puzzle-configs {
-    align-items: center;
-    display: flex;
-    gap: 24px;
-  }
 }
 
 @media (min-width: 1024px) {
   .device-desktop-only {
-    display: block;
-  }
-
-  .original-image-container {
     display: block;
   }
 

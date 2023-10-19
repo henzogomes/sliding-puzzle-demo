@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import Document, {
   Html,
   Head,
@@ -6,6 +7,15 @@ import Document, {
   DocumentContext,
   DocumentInitialProps
 } from 'next/document'
+import { css } from '../../styled-system/css'
+
+const bodyStyle = classNames(
+  css({
+    bg: 'secondary',
+    color: 'accent',
+    textShadow: '1px 1px 1px #000'
+  })
+)
 
 class CustomDocument extends Document {
   static async getInitialProps(
@@ -44,7 +54,7 @@ class CustomDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body>
+        <body className={bodyStyle}>
           <Main />
           <NextScript />
         </body>
