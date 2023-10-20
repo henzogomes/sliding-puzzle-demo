@@ -14,10 +14,6 @@ body {
   font-family: 'Press Start 2P', monospace;
 }
 
-.device-desktop-only {
-  display: none;
-}
-
 .footer-copyright {
   color: #fff;
 }
@@ -156,10 +152,6 @@ body {
 }
 
 @media (min-width: 1024px) {
-  .device-desktop-only {
-    display: block;
-  }
-
   .puzzle-outer-wrapper {
     max-height: 500px;
     max-width: 500px;

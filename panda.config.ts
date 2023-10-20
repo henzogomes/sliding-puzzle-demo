@@ -1,4 +1,4 @@
-import { defineConfig } from '@pandacss/dev'
+import { defineConfig, defineRecipe } from '@pandacss/dev'
 import { defineTextStyles } from '@pandacss/dev'
 
 export const textStyles = defineTextStyles({
@@ -7,6 +7,19 @@ export const textStyles = defineTextStyles({
     value: {
       fontWeight: 700,
       fontSize: '36px'
+    }
+  }
+})
+
+export const desktopOnly = defineRecipe({
+  className: 'desktopOnly',
+  description: 'Desktop only',
+  base: {
+    lgOnly: {
+      display: 'block'
+    },
+    lgDown: {
+      display: 'none'
     }
   }
 })
@@ -24,6 +37,9 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      recipes: {
+        desktopOnly: desktopOnly
+      },
       textStyles
     },
     tokens: {

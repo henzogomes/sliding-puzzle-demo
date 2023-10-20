@@ -3,6 +3,8 @@ import { HoverCard } from '../HoverCard'
 import { Switch } from '../Switch'
 import { flex } from '../../../styled-system/patterns'
 import classNames from 'classnames'
+import { css } from '../../../styled-system/css'
+import { desktopOnly } from '../../../styled-system/recipes'
 
 const PuzzleConfigs = (props: PuzzleConfigsProps) => {
   const { toggleMirror, toggleTilesNumbers, toggleMusic } = props
@@ -16,7 +18,7 @@ const PuzzleConfigs = (props: PuzzleConfigsProps) => {
       <div className={puzzleItem}>
         <Switch
           id="switch-tile-number-display"
-          label="Show Tiles Numbers"
+          label="Show Numbers"
           handleChange={toggleTilesNumbers}
         />
         <HoverCard
@@ -24,7 +26,7 @@ const PuzzleConfigs = (props: PuzzleConfigsProps) => {
           content="Switch configuration to display the number of the piece over each tile. This is a helper for the players."
         />
       </div>
-      <div className="device-desktop-only">
+      <div className={desktopOnly()}>
         <div className={puzzleItem}>
           <Switch
             id="switch-mirror-display"
@@ -39,15 +41,13 @@ const PuzzleConfigs = (props: PuzzleConfigsProps) => {
         </div>
       </div>
 
-      <div className="device-desktop-only">
-        <div className={puzzleItem}>
-          <Switch
-            id="switch-music"
-            label="Play music"
-            handleChange={toggleMusic}
-            defaultChecked={false}
-          />
-        </div>
+      <div className={puzzleItem}>
+        <Switch
+          id="switch-music"
+          label="Play music"
+          handleChange={toggleMusic}
+          defaultChecked={false}
+        />
       </div>
     </>
   )
