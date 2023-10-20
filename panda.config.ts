@@ -6,8 +6,31 @@ export const textStyles = defineTextStyles({
     description: 'H1 typography',
     value: {
       fontWeight: 700,
-      fontSize: '36px'
+      fontSize: '28px'
     }
+  }
+})
+
+export const pageSectionContainer = defineRecipe({
+  className: 'pageSectionContainer',
+  description: 'Page section container',
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '10px 0',
+    maxWidth: '980px',
+    width: '100%',
+    margin: '0 auto'
+  }
+})
+
+export const textShadow = defineRecipe({
+  className: 'textShadow',
+  description: 'Text shadow',
+  base: {
+    textShadow: '1px 1px 1px #000'
   }
 })
 
@@ -38,7 +61,9 @@ export default defineConfig({
   theme: {
     extend: {
       recipes: {
-        desktopOnly: desktopOnly
+        desktopOnly: desktopOnly,
+        pageSectionContainer: pageSectionContainer,
+        textShadow: textShadow
       },
       textStyles
     },
@@ -48,6 +73,11 @@ export default defineConfig({
         secondary: { value: '#422e31' },
         accent: { value: '#d6c894' }
       }
+    }
+  },
+  globalCss: {
+    '::selection': {
+      backgroundColor: 'primary'
     }
   },
 

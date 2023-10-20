@@ -10,7 +10,6 @@ const Avatar = (props: AvatarProps) => {
   const { src, alt } = image
 
   const Root = classNames(
-    flex({ align: 'center', justify: 'center' }),
     css({
       borderRadius: '50%',
       overflow: 'hidden',
@@ -24,6 +23,10 @@ const Avatar = (props: AvatarProps) => {
         w: '150px',
         h: '150px',
         _hover: { transform: 'scale(1.1)' }
+      },
+      lgDown: {
+        w: '80px',
+        h: '80px'
       }
     })
   )

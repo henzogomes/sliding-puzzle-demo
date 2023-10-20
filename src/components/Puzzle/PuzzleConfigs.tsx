@@ -3,7 +3,6 @@ import { HoverCard } from '../HoverCard'
 import { Switch } from '../Switch'
 import { flex } from '../../../styled-system/patterns'
 import classNames from 'classnames'
-import { css } from '../../../styled-system/css'
 import { desktopOnly } from '../../../styled-system/recipes'
 
 const PuzzleConfigs = (props: PuzzleConfigsProps) => {

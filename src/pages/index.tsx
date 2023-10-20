@@ -5,7 +5,8 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { Avatar } from '@/components/Avatar'
 import { Infobar } from '@/components/Infobar'
-import { PageSection } from '@/components/PageSection'
+import { pageSectionContainer, textShadow } from '../../styled-system/recipes'
+
 import {
   GameState,
   PuzzleConfigs,
@@ -17,7 +18,6 @@ import { initializePuzzleTiles } from '@/utils/puzzle'
 import { Loading } from '@/components/Loading'
 import classNames from 'classnames'
 import { flex } from '../../styled-system/patterns/flex'
-import { grid } from '../../styled-system/patterns'
 import { css } from '../../styled-system/css'
 
 export async function getServerSideProps() {
@@ -114,7 +114,6 @@ const Home: React.FC<HomeProps> = ({
   const updatePuzzleGame = (puzzleSize: number, path: string) => {
     setLoading(true)
 
-    console.log('loading')
     // Handle the click event here
     // Send an HTTP request to the server
     fetch('/api/load-image', {
@@ -210,7 +209,16 @@ const Home: React.FC<HomeProps> = ({
   ]
 
   const avatarContainer = classNames(
-    grid({ columns: 5, gap: 10 }),
+    flex({
+      lg: {
+        flexWrap: 'wrap',
+        gap: 50
+      },
+      lgDown: {
+        flexWrap: 'wrap',
+        gap: 24
+      }
+    }),
     css({ py: 25 })
   )
 
@@ -219,7 +227,22 @@ const Home: React.FC<HomeProps> = ({
     css({ margin: '24px 0 ' })
   )
 
-  const puzzleContainer = classNames(grid({ columns: 2, gap: 16 }))
+  const puzzleContainer = classNames(
+    flex({
+      align: 'center',
+      justify: 'center',
+      gap: 8,
+      w: '100%',
+      lg: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+      },
+      lgDown: {
+        flexDirection: 'column',
+        flexWrap: 'wrap'
+      }
+    })
+  )
 
   const originalImageOverlay = classNames(
     css({
@@ -240,11 +263,11 @@ const Home: React.FC<HomeProps> = ({
         <meta name="description" content={description} />
       </Head>
       <Loading isLoading={loading} />
-      <PageSection>
-        <h1 className={css({ textStyle: 'typographyH1', py: 35 })}>{title}</h1>
-      </PageSection>
+      <div className={pageSectionContainer()}>
+        <h1 className={css({ textStyle: 'typographyH1', p: 35 })}>{title}</h1>
+      </div>
       <div className={css({ bg: 'primary' })}>
-        <PageSection>
+        <div className={pageSectionContainer()}>
           <div className={avatarContainer}>
             {avatarImageFilenames.map((avatar, idx) => (
               <Avatar
@@ -259,9 +282,9 @@ const Home: React.FC<HomeProps> = ({
               />
             ))}
           </div>
-        </PageSection>
+        </div>
       </div>
-      <PageSection>
+      <div className={pageSectionContainer()}>
         <div className={puzzleConfigs}>
           <PuzzleConfigs
             timerOptions={timerOptions}
@@ -279,7 +302,12 @@ const Home: React.FC<HomeProps> = ({
             gameState={gameState}
             setGameState={setGameState}
           />
-          <div className={css({ position: 'relative' })}>
+          <div
+            className={css({
+              position: 'relative',
+              lgDown: { display: 'none' }
+            })}
+          >
             <Image
               src={`/${originalSrc}`}
               alt="Original Image"
@@ -297,7 +325,7 @@ const Home: React.FC<HomeProps> = ({
             handleRestartClick={handleRestartClick}
           />
         </div>
-      </PageSection>
+      </div>
 
       <audio id="omfgaudio" loop={true}>
         <source src="/audio/omfgdogs.mp3" type="audio/mpeg" />
